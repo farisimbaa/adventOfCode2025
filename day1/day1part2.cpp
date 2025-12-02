@@ -5,17 +5,24 @@ using namespace std;
 int zeroCount = 0;
 
 int rotateLeft (int point, int value) {
-    if (point - value < 0) {
-        zeroCount = zeroCount + ((point + value) / 100);
-        return (point - value % 100 + 100) % 100;
-    } else return point - value;
+    int steps = value % 100;
+    int loops = value / 100;
+
+    zeroCount += loops;
+    
+    if (point != 0 && point - steps <= 0) zeroCount++;
+
+    return (point - steps + 100) % 100;
 }
 
 int rotateRight (int point, int value) {
-    if (point + value >= 100) {
-        zeroCount = zeroCount + ((point + value) / 100);
-        return (point + value % 100) % 100;
-    } else return point + value;
+    int steps = value % 100;
+    int loops = value / 100;
+
+    zeroCount += loops;
+
+    if (point != 0 && point + steps >= 100) zeroCount++;
+    return (point + steps) % 100;
 }
 
 int rotate(int point, string rotation) {
@@ -27,7 +34,8 @@ int rotate(int point, string rotation) {
 }
 
 int main() {
-    ifstream file("day1example.txt");
+    ifstream file("day1input.txt");
+    // ifstream file("day1example.txt");
     if (!file.is_open()) {
         cerr << "Error: Cannot open file." << endl;
         return 1;
@@ -41,7 +49,7 @@ int main() {
         cout << "The dial is rotated " << rotation.front() << rotation.substr(1) << " to point at ";
         point = rotate(point, rotation);
         cout << point << endl;
-        if (point == 0) zeroCount++;
+        cout << "Current zero count: " << zeroCount << endl;
     }
 
     file.close();
