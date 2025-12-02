@@ -7,14 +7,19 @@ using namespace std;
 long long sum = 0;
 
 bool checkInvalid(long long id) {
-    if (to_string(id).length() % 2 != 0) return false;
-
-    string s = to_string(id);
-    string s1 = s.substr(0, s.length() / 2);
-    string s2 = s.substr(s.length() / 2, s.length() / 2);
-
-    if (s1 == s2) return true;
-    return false;
+    if (to_string(id).length() % 2 != 0) {
+        string s = to_string(id);
+        string s1 = s.substr(0, s.length() / 2);
+        string s2 = s.substr(s.length() / 2 + 1);
+        if (s1 == s2) return true;
+        return false;
+    } else {
+        string s = to_string(id);
+        string s1 = s.substr(0, s.length() / 2);
+        string s2 = s.substr(s.length() / 2, s.length() / 2);
+        if (s1 == s2) return true;
+        return false;
+    }
 }
 
 vector<long long> generateIds(long long start, long long end) {
@@ -23,16 +28,16 @@ vector<long long> generateIds(long long start, long long end) {
         ids.push_back(i);
         if (checkInvalid(i)) {
             sum += i;
-            // cout << "Invalid ID found: " << i << endl;
-            // cout << "Current sum: " << sum << endl;
+            cout << "Invalid ID found: " << i << endl;
+            cout << "Current sum: " << sum << endl;
         }
     }
     return ids;
 }
 
 int main() {
-    // ifstream file("day2example.txt");
-    ifstream file("day2input.txt");
+    ifstream file("day2example.txt");
+    // ifstream file("day2input.txt");
     if (!file.is_open()) {
         return 1;
     }
