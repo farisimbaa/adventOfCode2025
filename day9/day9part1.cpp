@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
-vector<vector<char>> grid;
 vector<pair<long long, long long>> points;
 
 long long calcArea(int x1, int y1, int x2, int y2) {
@@ -19,23 +19,17 @@ int main() {
 
     string line;
     while (getline(inputFile, line)) {
-        vector<char> row;
-        for (char c : line) {
-            row.push_back(c);
-        }
-        grid.push_back(row);
+        if (line.empty()) continue;
+
+        stringstream ss(line);
+        long long x, y;
+        char comma;
+
+        ss >> x >> comma >> y;
+        points.push_back(make_pair(x, y));
     }
 
     inputFile.close();
-
-    for (int i = 0; i < grid.size(); i++) {
-        for (int j = 0; j < grid[i].size(); j++) {
-            if (grid[i][j] == '#') {
-                // cout << "Found point at (" << i << ", " << j << ")\n";
-                points.push_back(make_pair(i, j));
-            }
-        }
-    }
 
     long long maxSize = 0;
     for (int i = 0; i < points.size(); i++) {
